@@ -1,6 +1,6 @@
 from rental import Rental
 from movie import Movie
-import logging
+
 
 class Customer:
     """
@@ -36,41 +36,21 @@ class Customer:
         fmt = "{:32s}   {:4d} {:6.2f}\n"
         
         for rental in self.rentals:
-            # compute rental change
-            amount = 0
-            if rental.get_movie().get_price_code() == Movie.REGULAR:
-                # Two days for $2, additional days 1.50 each.
-                amount = 2.0
-                if rental.get_days_rented() > 2:
-                    amount += 1.5*(rental.get_days_rented()-2)
-            elif rental.get_movie().get_price_code() == Movie.CHILDRENS:
-                # Three days for $1.50, additional days 1.50 each.
-                amount = 1.5
-                if rental.get_days_rented() > 3:
-                    amount += 1.5*(rental.get_days_rented()-3)
-            elif rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-                # Straight per day charge
-                amount = 3*rental.get_days_rented()
-            else:
-                log = logging.getLogger()
-                log.error(f"Movie {rental.get_movie()} has unrecognized priceCode {rental.get_movie().get_price_code()}")
             # award renter points
-            if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-                frequent_renter_points += rental.get_days_rented()
-            else:
-                frequent_renter_points += 1
-            #  add detail line to statement
-            statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), amount)
+            frequent_renter_points = Rental.get_renter_point(rental)
+            # add detail line to statement
+            statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), Rental.get_price(rental))
             # and accumulate activity
-            total_amount += amount
-
-        # footer: summary of charges
+            total_amount += Rental.get_price(rental)
         statement += "\n"
         statement += "{:32s} {:6s} {:6.2f}\n".format(
-                       "Total Charges", "", total_amount)
+            "Total Charges", "", total_amount)
         statement += "Frequent Renter Points earned: {}\n".format(frequent_renter_points)
 
         return statement
+
+
+
 
 if __name__ == "__main__":
     customer = Customer("Edward Snowden")
