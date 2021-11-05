@@ -8,14 +8,14 @@ class RentalTest(unittest.TestCase):
 	
 	def setUp(self):
 		self.new_movie = Movie("Mulan", PriceCode.new_release)
-		self.regular_movie = Movie("CitizenFour", PriceCode.regular)
+		self.regular_movie = Movie("CitizenFour", PriceCode.normal)
 		self.childrens_movie = Movie("Frozen", PriceCode.childrens)
 
 	def test_movie_attributes(self):
 		"""trivial test to catch refactoring errors or change in API of Movie"""
-		m = Movie("CitizenFour", PriceCode.regular)
+		m = Movie("CitizenFour", PriceCode.normal)
 		self.assertEqual("CitizenFour", m.get_title())
-		self.assertEqual(PriceCode.regular, m.get_price_code())
+		self.assertEqual(PriceCode.normal, m.get_price_code())
 
 	def test_rental_price(self):
 		rental = Rental(self.new_movie, 1)

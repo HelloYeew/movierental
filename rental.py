@@ -32,5 +32,5 @@ class Rental:
 
 	def get_renter_point(self):
 		frequent_renter_points = 0
-		frequent_renter_points += self.get_movie().get_price_code().frequent_renter_point(self.days_rented)
+		frequent_renter_points += self.get_movie().get_price_code().frequent_renter_points(self.days_rented)
 		return frequent_renter_points

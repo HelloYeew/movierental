@@ -20,6 +20,30 @@ class Customer:
     
     def get_name(self):
         return self.name
+
+    def compute_rental_points(self):
+        """
+            Compute the total rental points for the customer.
+            Returns:
+                the total rental points as an integer
+        """
+        result = 0
+        for rental in self.rentals:
+            # add frequent renter points
+            result += Rental.get_renter_point(rental)
+        return result
+
+    def compute_total_charge(self):
+        """
+            Compute the total charge for the customer.
+            Returns:
+                the total charge as a float
+        """
+        result = 0
+        for rental in self.rentals:
+            # add rental amounts
+            result += Rental.get_price(rental)
+        return result
     
     def statement(self):
         """
