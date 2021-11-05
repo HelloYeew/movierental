@@ -1,6 +1,5 @@
 import unittest
-from customer import Customer
-from rental import Rental
+from rental import Rental, PriceCode
 from movie import *
 
 
