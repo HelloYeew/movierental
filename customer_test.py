@@ -1,5 +1,6 @@
 import re
-import unittest 
+import unittest
+from datetime import datetime
 from customer import Customer
 from rental import Rental, PriceCode
 from movie import *
@@ -14,9 +15,9 @@ class CustomerTest(unittest.TestCase):
 		movies = list of some movies
 		"""
 		self.c = Customer("Movie Mogul")
-		self.new_movie = Movie("Mulan", PriceCode.new_release)
-		self.regular_movie = Movie("CitizenFour", PriceCode.normal)
-		self.childrens_movie = Movie("Frozen", PriceCode.childrens)
+		self.new_movie = Movie("Mulan", str(datetime.now().year), ["Children"])
+		self.regular_movie = Movie("CitizenFour", "2005", ["Regular"])
+		self.childrens_movie = Movie("Frozen", "2015", ["Children"])
 		
 	@unittest.skip("No convenient way to test")
 	def test_billing():

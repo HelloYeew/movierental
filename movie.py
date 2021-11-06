@@ -1,3 +1,5 @@
+import csv
+
 class Movie:
     """A movie available for rent."""
 
@@ -26,3 +28,27 @@ class Movie:
         return self.__title
 
 
+class MovieCatalog:
+    """A movie catalog that fetch the data from CSV file"""
+
+    def __int__(self):
+        self.catalog = {}
+        self.index_count = 0
+
+    def load_data(self):
+        """Load the data from CSV file"""
+        with open('movies.csv', 'r') as f:
+            row = list(csv.reader(f))
+            self.catalog[row[self.index_count][1]] = Movie(row[self.index_count][1], row[self.index_count][2], row[self.index_count][3].split('|'))
+        self.index_count += 1
+
+    def get_movie(self, title: str) -> Movie:
+        """Get movie from the catalog"""
+        while True:
+            if title in self.catalog:
+                return self.catalog[title]
+            else:
+                try:
+                    self.load_data()
+                except IndexError:
+                    break
